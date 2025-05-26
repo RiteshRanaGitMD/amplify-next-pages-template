@@ -26,8 +26,8 @@ export const handler = async (event: CalculatorEvent) => {
       result = num2 !== 0 ? num1 / num2 : NaN;
       break;
     default:
-      return { error: 'Invalid operation' };
+      throw new Error("Invalid operation");
   }
 
-  return { result };
+  return result;
 };
