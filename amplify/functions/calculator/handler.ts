@@ -12,8 +12,13 @@ export const handler = async (event: CalculatorEvent) => {
   const { num1, num2, operation } = event;
   let result: number;
 
-  // Normalize operation string
-  const op = typeof operation === "string" ? operation.trim().toLowerCase() : "";
+  // Debug log for event
+  console.log("Calculator event received:", event);
+
+  // Fallback/default for operation
+  const op = typeof operation === "string" && operation
+    ? operation.trim().toLowerCase()
+    : "add";
 
   switch (op) {
     case "add":
