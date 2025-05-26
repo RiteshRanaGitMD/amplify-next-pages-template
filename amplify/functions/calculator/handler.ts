@@ -37,7 +37,7 @@ export const handler = async (event: CalculatorEvent) => {
       result = num1 / num2;
       break;
     default:
-      throw new Error(`Invalid operation: ${operation}`);
+      throw new Error(`Invalid operation: ${operation} ****`);
   }
 
   return result;

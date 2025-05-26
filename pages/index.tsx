@@ -57,15 +57,17 @@ export default function App() {
         num2: calcNum2,
         operation: calcOp,
       });
+        console.log("***  result ", response)
+
       if (typeof response.data === "number") {
-        console.log("*** calulation result", response)
+        console.log("*** calulation result 1", response)
         setCalcResult("Result: " + response.data);
       } else {
-         console.log("*** err", response)
+         console.log("*** err 2", response)
         setCalcResult("Error: " + (response.errors?.[0]?.message || "Unknown error"));
       }
     } catch (err) {
-       console.log("*** err", err)
+       console.log("*** err 3", err)
       setCalcResult("Error: " + (err as Error).message);
     }
   }
