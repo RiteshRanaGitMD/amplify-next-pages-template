@@ -1,5 +1,6 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 import { sayHello } from "../functions/say-hello/resource";
+import { calculator } from "../functions/calculator/resource";
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
 adding a new "isDone" field as a boolean. The authorization rule below
@@ -21,6 +22,17 @@ const schema = a.schema({
     .returns(a.string())
     .authorization(allow => [allow.authenticated(), allow.publicApiKey()])
     .handler(a.handler.function(sayHello)),
+
+  calculate: a
+    .mutation()
+    .arguments({
+      num1: a.float(),
+      num2: a.float(),
+      operation: a.string(),
+    })
+    .returns(a.float())
+    .authorization(allow => [allow.authenticated(), allow.publicApiKey()])
+    .handler(a.handler.function(calculator)),
 });
 
 export type Schema = ClientSchema<typeof schema>;
