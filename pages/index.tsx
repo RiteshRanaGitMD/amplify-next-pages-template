@@ -17,6 +17,7 @@ export default function App() {
 
   useEffect(() => {
     client.queries.sayHello({ name: "Amplify" }).then((res) => {
+      console.log("**res", res)
       setHelloMsg(res.data ?? "No response");
     }).catch((err) => {
       setHelloMsg("Error: " + err.message);
@@ -59,7 +60,7 @@ export default function App() {
           Review next steps of this tutorial.
         </a>
       </div>
-      <h2>{helloMsg}</h2>
+      <h2>{"----"}{helloMsg}</h2>
       <button onClick={signOut}>Sign out</button>
     </main>
   );
