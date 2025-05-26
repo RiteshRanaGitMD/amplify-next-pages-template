@@ -19,7 +19,7 @@ const schema = a.schema({
       name: a.string(),
     })
     .returns(a.string())
-    .authorization(allow => [allow.publicApiKey()])
+    .authorization(allow => [allow.authenticated(), allow.publicApiKey()])
     .handler(a.handler.function(sayHello)),
 });
 
