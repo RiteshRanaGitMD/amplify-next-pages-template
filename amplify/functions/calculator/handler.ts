@@ -8,12 +8,18 @@ interface CalculatorEvent {
   operation: Operation;
 }
 
-export const handler = async (event: CalculatorEvent) => {
-  const { num1, num2, operation } = event;
+export const handler = async (event: any) => {
+  // For AppSync/Amplify Gen 2, arguments are under event.arguments
+  const { num1, num2, operation } = event.arguments || {};
   let result: number;
 
   // Debug log for event
   console.log("Calculator event received:", event);
+
+  if (typeof num1 !== "number" || typeof num2 !== "number" || !operation) {
+    console.log("Missing or invalid arguments:", { num1, num2, operation });
+    return 0;
+  }
 
   // Fallback/default for operation
   const op = typeof operation === "string" && operation
@@ -37,7 +43,7 @@ export const handler = async (event: CalculatorEvent) => {
       result = num1 / num2;
       break;
     default:
-      throw new Error(`Invalid operation: ${operation} ****`);
+      throw new Error(`Invalid operation: ${operation}`);
   }
 
   return result;
