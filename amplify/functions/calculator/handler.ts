@@ -31,7 +31,10 @@ export const handler = async (event: CalculatorEvent) => {
       result = num1 * num2;
       break;
     case "divide":
-      result = num2 !== 0 ? num1 / num2 : NaN;
+      if (num2 === 0) {
+        throw new Error("Division by zero is not allowed");
+      }
+      result = num1 / num2;
       break;
     default:
       throw new Error(`Invalid operation: ${operation}`);
