@@ -7,7 +7,7 @@ const client = generateClient<Schema>();
 
 export default function App() {
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
-  const [helloMsg, setHelloMsg]= useState<string>("")
+  const [helloMsg, setHelloMsg] = useState<string>("");
   const { user, signOut } = useAuthenticator();
   function listTodos() {
     client.models.Todo.observeQuery().subscribe({
@@ -16,12 +16,15 @@ export default function App() {
   }
 
   useEffect(() => {
-    client.queries.sayHello({ name: "Amplify" }).then((res) => {
-      console.log("**res", res)
-      setHelloMsg(res.data ?? "No response");
-    }).catch((err) => {
-      setHelloMsg("Error: " + err.message);
-    });
+    client.queries
+      .sayHello({ name: user?.signInDetails?.loginId })
+      .then((res) => {
+        console.log("**res", user);
+        setHelloMsg(res.data ?? "No response");
+      })
+      .catch((err) => {
+        setHelloMsg("Error: " + err.message);
+      });
   }, []);
 
   useEffect(() => {
@@ -60,7 +63,10 @@ export default function App() {
           Review next steps of this tutorial.
         </a>
       </div>
-      <h2>{"----"}{helloMsg}</h2>
+      <h2>
+        {helloMsg} <br/>
+        {"Wecome to the app"}
+      </h2>
       <button onClick={signOut}>Sign out</button>
     </main>
   );
