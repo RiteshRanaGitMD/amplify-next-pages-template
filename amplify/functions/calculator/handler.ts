@@ -12,21 +12,24 @@ export const handler = async (event: CalculatorEvent) => {
   const { num1, num2, operation } = event;
   let result: number;
 
-  switch (operation) {
-    case 'add':
+  // Normalize operation string
+  const op = typeof operation === "string" ? operation.trim().toLowerCase() : "";
+
+  switch (op) {
+    case "add":
       result = num1 + num2;
       break;
-    case 'subtract':
+    case "subtract":
       result = num1 - num2;
       break;
-    case 'multiply':
+    case "multiply":
       result = num1 * num2;
       break;
-    case 'divide':
+    case "divide":
       result = num2 !== 0 ? num1 / num2 : NaN;
       break;
     default:
-      throw new Error("Invalid operation");
+      throw new Error(`Invalid operation: ${operation}`);
   }
 
   return result;

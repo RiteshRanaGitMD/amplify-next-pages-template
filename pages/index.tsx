@@ -19,7 +19,7 @@ export default function App() {
     client.queries
       .sayHello({ name: user?.signInDetails?.loginId })
       .then((res) => {
-        console.log("**res", user);
+        // console.log("**res", user);
         setHelloMsg(res.data ?? "No response");
       })
       .catch((err) => {
@@ -58,11 +58,14 @@ export default function App() {
         operation: calcOp,
       });
       if (typeof response.data === "number") {
+        console.log("*** calulation result", response)
         setCalcResult("Result: " + response.data);
       } else {
+         console.log("*** err", response)
         setCalcResult("Error: " + (response.errors?.[0]?.message || "Unknown error"));
       }
     } catch (err) {
+       console.log("*** err", err)
       setCalcResult("Error: " + (err as Error).message);
     }
   }
