@@ -7,12 +7,21 @@ const client = generateClient<Schema>();
 
 export default function App() {
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
+  const [helloMsg, setHelloMsg]= useState<string>("")
   const { user, signOut } = useAuthenticator();
   function listTodos() {
     client.models.Todo.observeQuery().subscribe({
       next: (data) => setTodos([...data.items]),
     });
   }
+
+  useEffect(() => {
+    client.queries.sayHello({ name: "Amplify" }).then((res) => {
+      setHelloMsg(res.data ?? "No response");
+    }).catch((err) => {
+      setHelloMsg("Error: " + err.message);
+    });
+  }, []);
 
   useEffect(() => {
     listTodos();
@@ -50,6 +59,7 @@ export default function App() {
           Review next steps of this tutorial.
         </a>
       </div>
+      <h2>{helloMsg}</h2>
       <button onClick={signOut}>Sign out</button>
     </main>
   );
